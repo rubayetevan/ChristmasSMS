@@ -78,9 +78,10 @@ public class MainActivity extends AppCompatActivity
 
                 smss.add(i,sm);
             }
+
             SMSAdapter smsAdapter = new SMSAdapter(MainActivity.this, smss);
             smsLV.setAdapter(smsAdapter);
-
+            smsLV.setVisibility(View.VISIBLE);
         }
         smsLV.setVisibility(View.GONE);
     }
@@ -91,12 +92,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<SMS> call, Response<SMS> response) {
                 progressBar.setVisibility(View.GONE);
-                smsLV.setVisibility(View.VISIBLE);
+
                 sms.clear();
                 sms = response.body().getSms();
                 SMSAdapter smsAdapter = new SMSAdapter(MainActivity.this, sms);
                 smsLV.setAdapter(smsAdapter);
-
+                smsLV.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -143,8 +144,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.inspiration) {
+        if (id == R.id.featured) {
+            showSMS("");
+            // Handle the camera action
+        }
+        else if (id == R.id.inspiration) {
             showSMS("");
             // Handle the camera action
         } else if (id == R.id.peace) {
@@ -157,6 +161,10 @@ public class MainActivity extends AppCompatActivity
             showSMS("");
 
         } else if (id == R.id.friend) {
+
+            showSMS("");
+        }
+        else if (id == R.id.shortListed) {
 
             showShortlistedSMS();
 

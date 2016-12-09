@@ -3,6 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/featured"
+            android:icon="@drawable/ic_1"
+            android:title="Featured" />
+        <item
             android:id="@+id/peace"
             android:icon="@drawable/ic_1"
             android:title="Peace and Happiness" />
@@ -22,6 +26,10 @@
             android:id="@+id/friend"
             android:icon="@drawable/ic_5"
             android:title="Friendship" />
+        <item
+            android:id="@+id/shortListed"
+            android:icon="@drawable/ic_5"
+            android:title="Shortlisted" />
     </group>
 
 </menu>
