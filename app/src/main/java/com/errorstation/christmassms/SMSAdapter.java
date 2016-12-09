@@ -72,6 +72,8 @@ public class SMSAdapter extends ArrayAdapter {
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("background", count);
                 intent.putExtra("details", sms.get(position).getDescription());
+                intent.putExtra("title",sms.get(position).getTitle());
+                intent.putExtra("id",sms.get(position).getId());
                 // context.startActivity(intent);
                 Bundle bundle1 = ActivityOptions.makeSceneTransitionAnimation((Activity) context, smsHolder.backView, smsHolder.backView.getTransitionName()).toBundle();
                 context.startActivity(intent, bundle1);

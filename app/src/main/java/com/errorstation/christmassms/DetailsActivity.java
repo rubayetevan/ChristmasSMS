@@ -1,59 +1,83 @@
 package com.errorstation.christmassms;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class DetailsActivity extends AppCompatActivity {
 
-
+    Toolbar dToolbar;
+    Realm realm;
+    boolean shortlisted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        dToolbar = (Toolbar) findViewById(R.id.dToolbar);
+        final FloatingActionButton shareFAB = (FloatingActionButton) findViewById(R.id.share);
+        final FloatingActionButton shortListFAB = (FloatingActionButton) findViewById(R.id.shortList);
+        setSupportActionBar(dToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("");
+        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp);
+        upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        Realm.init(this);
+        realm = Realm.getDefaultInstance();
+
         Intent intent = getIntent();
-        int count = intent.getIntExtra("background",0);
+        int count = intent.getIntExtra("background", 0);
         final String details = intent.getStringExtra("details");
+        final String title = intent.getStringExtra("title");
+        final String id = intent.getStringExtra("id");
+
+
+        SMSDB sms = realm.where(SMSDB.class).equalTo("id", id).findFirst();
+
+
+        if (sms != null) {
+            shortlisted = true;
+            shortListFAB.setImageDrawable(getResources().getDrawable(R.drawable.ic_done_all_black_24dp));
+        }
 
         View view = findViewById(R.id.detailsView);
         TextView detailsTV = (TextView) findViewById(R.id.detailsTV);
 
         detailsTV.setText(details);
 
-        if(count==0)
-        {
+        if (count == 0) {
             view.setBackground(getResources().getDrawable(R.drawable.ic_color_1));
-        }
-        else if (count==1)
-        {
+        } else if (count == 1) {
             view.setBackground(getResources().getDrawable(R.drawable.ic_color_2));
-        }
-        else if (count==2)
-        {
+        } else if (count == 2) {
             view.setBackground(getResources().getDrawable(R.drawable.ic_color_3));
-        }
-        else if (count==3)
-        {
+        } else if (count == 3) {
             view.setBackground(getResources().getDrawable(R.drawable.ic_color_4));
-        }
-        else if (count==4)
-        {
+        } else if (count == 4) {
             view.setBackground(getResources().getDrawable(R.drawable.ic_color_5));
-        }
-        else if (count==5)
-        {
+        } else if (count == 5) {
             view.setBackground(getResources().getDrawable(R.drawable.ic_color_6));
         }
 
-        final FloatingActionButton shareFAB = (FloatingActionButton) findViewById(R.id.share);
-        final FloatingActionButton shortListFAB = (FloatingActionButton) findViewById(R.id.shortList);
+
         shareFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,9 +92,42 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tapAnimation(shortListFAB);
+                if (!shortlisted) {
+                    realm.beginTransaction();
+                    SMSDB smsdb = realm.createObject(SMSDB.class);
+                    smsdb.setId(id);
+                    smsdb.setDetails(details);
+                    smsdb.setTitle(title);
+                    realm.commitTransaction();
+                    shortListFAB.setImageDrawable(getResources().getDrawable(R.drawable.ic_done_all_black_24dp));
+                    shortlisted=true;
+                }
+                else if (shortlisted)
+                {
+
+                    RealmResults<SMSDB> sms = realm.where(SMSDB.class).equalTo("id", id).findAll();
+                    realm.beginTransaction();
+                    sms.deleteAllFromRealm();
+                    realm.commitTransaction();
+                    shortListFAB.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_black_24dp));
+                    shortlisted=false;
+                }
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
     public void tapAnimation(View view) {
 
         final Animation myAnim = AnimationUtils.loadAnimation(DetailsActivity.this, R.anim.bounce);

@@ -21,6 +21,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity
     List<Sm> sms = new ArrayList<>();
 
     ProgressBar progressBar;
-
+    Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +53,36 @@ public class MainActivity extends AppCompatActivity
 
         smsLV = (ListView) findViewById(R.id.smsLV);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
+        Realm.init(this);
+        realm = Realm.getDefaultInstance();
 
         showSMS("");
 
 
+    }
+
+    private void showShortlistedSMS()
+    {
+        List<Sm> smss = new ArrayList<>();
+        smss.clear();
+        RealmResults<SMSDB> sms = realm.where(SMSDB.class).findAll();
+        Toast.makeText(this, "DB Size: "+String.valueOf(sms.size()), Toast.LENGTH_SHORT).show();
+        if(sms.size()>0)
+        {
+            for (int i= 0; i<sms.size();i++)
+            {
+                Sm sm = new Sm();
+                sm.setTitle(sms.get(i).getTitle());
+                sm.setId(sms.get(i).getId());
+                sm.setDescription(sms.get(i).getDetails());
+
+                smss.add(i,sm);
+            }
+            SMSAdapter smsAdapter = new SMSAdapter(MainActivity.this, smss);
+            smsLV.setAdapter(smsAdapter);
+
+        }
+        smsLV.setVisibility(View.GONE);
     }
 
     private void showSMS(String s) {
@@ -64,6 +91,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<SMS> call, Response<SMS> response) {
                 progressBar.setVisibility(View.GONE);
+                smsLV.setVisibility(View.VISIBLE);
                 sms.clear();
                 sms = response.body().getSms();
                 SMSAdapter smsAdapter = new SMSAdapter(MainActivity.this, sms);
@@ -117,14 +145,20 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.inspiration) {
+            showSMS("");
             // Handle the camera action
         } else if (id == R.id.peace) {
+            showSMS("");
 
         } else if (id == R.id.thanks) {
+            showSMS("");
 
         } else if (id == R.id.love) {
+            showSMS("");
 
         } else if (id == R.id.friend) {
+
+            showShortlistedSMS();
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

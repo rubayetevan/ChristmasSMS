@@ -6,9 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-
     tools:context="com.errorstation.christmassms.DetailsActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+
+<android.support.v7.widget.Toolbar
+    android:id="@+id/dToolbar"
+    android:layout_width="match_parent"
+    android:background="@drawable/ic_toolbar"
+    android:layout_height="?attr/actionBarSize">
+
+
+</android.support.v7.widget.Toolbar>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -88,4 +100,5 @@
 
         </LinearLayout>
     </ScrollView>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
