@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:id="@+id/frame"
+    android:layout_height="80dp">
+    <View
+        android:transitionName="@string/transition"
+        android:id="@+id/backView"
+        android:background="@drawable/ic_color_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+<TextView
+    android:id="@+id/headingTV"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="10dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:text="hello"
+    android:textColor="#FFFFFF"
+    android:textSize="20sp" />
+</FrameLayout>
