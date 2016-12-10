@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Pair;
@@ -74,12 +75,14 @@ public class SMSAdapter extends ArrayAdapter {
                 intent.putExtra("details", sms.get(position).getDescription());
                 intent.putExtra("title",sms.get(position).getTitle());
                 intent.putExtra("id",sms.get(position).getId());
-                // context.startActivity(intent);
-                Bundle bundle1 = ActivityOptions.makeSceneTransitionAnimation((Activity) context, smsHolder.backView, smsHolder.backView.getTransitionName()).toBundle();
-                context.startActivity(intent, bundle1);
-               /* ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,
-                        Pair.create(smsHolder.headingTV, "agreedName1"),
-                        Pair.create(smsHolder.backView, "agreedName2"));*/
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Bundle bundle1 = ActivityOptions.makeSceneTransitionAnimation((Activity) context, smsHolder.backView, smsHolder.backView.getTransitionName()).toBundle();
+                    context.startActivity(intent, bundle1);
+                }
+                else {
+                    context.startActivity(intent);
+                }
+
             }
         });
         Animation animation = AnimationUtils.loadAnimation(getContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);

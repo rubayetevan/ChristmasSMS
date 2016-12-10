@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     ProgressBar progressBar;
     Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,29 +62,26 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void showShortlistedSMS()
-    {
+    private void showShortlistedSMS() {
         List<Sm> smss = new ArrayList<>();
         smss.clear();
         RealmResults<SMSDB> sms = realm.where(SMSDB.class).findAll();
-        Toast.makeText(this, "DB Size: "+String.valueOf(sms.size()), Toast.LENGTH_SHORT).show();
-        if(sms.size()>0)
-        {
-            for (int i= 0; i<sms.size();i++)
-            {
+        if (sms.size() > 0) {
+            for (int i = 0; i < sms.size(); i++) {
                 Sm sm = new Sm();
                 sm.setTitle(sms.get(i).getTitle());
                 sm.setId(sms.get(i).getId());
                 sm.setDescription(sms.get(i).getDetails());
 
-                smss.add(i,sm);
+                smss.add(i, sm);
             }
 
             SMSAdapter smsAdapter = new SMSAdapter(MainActivity.this, smss);
             smsLV.setAdapter(smsAdapter);
             smsLV.setVisibility(View.VISIBLE);
+        } else {
+            smsLV.setVisibility(View.GONE);
         }
-        smsLV.setVisibility(View.GONE);
     }
 
     private void showSMS(String s) {
@@ -147,8 +145,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.featured) {
             showSMS("");
             // Handle the camera action
-        }
-        else if (id == R.id.inspiration) {
+        } else if (id == R.id.inspiration) {
             showSMS("");
             // Handle the camera action
         } else if (id == R.id.peace) {
@@ -163,11 +160,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.friend) {
 
             showSMS("");
-        }
-        else if (id == R.id.shortListed) {
+        } else if (id == R.id.shortListed) {
 
             showShortlistedSMS();
-
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

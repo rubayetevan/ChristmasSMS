@@ -3,7 +3,9 @@ package com.errorstation.christmassms;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +25,7 @@ public class DetailsActivity extends AppCompatActivity {
     Toolbar dToolbar;
     Realm realm;
     boolean shortlisted = false;
+    CoordinatorLayout activity_details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class DetailsActivity extends AppCompatActivity {
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp);
         upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        activity_details = (CoordinatorLayout) findViewById(R.id.activity_details);
 
         Realm.init(this);
         realm = Realm.getDefaultInstance();
@@ -101,6 +106,10 @@ public class DetailsActivity extends AppCompatActivity {
                     realm.commitTransaction();
                     shortListFAB.setImageDrawable(getResources().getDrawable(R.drawable.ic_done_all_black_24dp));
                     shortlisted=true;
+                    Snackbar snackbar = Snackbar
+                            .make(activity_details, "SMS shortlisted! You can now find this sms in 'SHORTLISTED' category.", Snackbar.LENGTH_LONG);
+
+                    snackbar.show();
                 }
                 else if (shortlisted)
                 {
@@ -111,6 +120,10 @@ public class DetailsActivity extends AppCompatActivity {
                     realm.commitTransaction();
                     shortListFAB.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_black_24dp));
                     shortlisted=false;
+                    Snackbar snackbar = Snackbar
+                            .make(activity_details, "SMS removed from shortlist!", Snackbar.LENGTH_LONG);
+
+                    snackbar.show();
                 }
             }
         });
