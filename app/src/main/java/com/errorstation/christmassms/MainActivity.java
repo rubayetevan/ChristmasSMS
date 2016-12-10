@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
                 .build();
         mAdView.loadAd(adRequest);
 
-        showSMS("6");
+        showSMS("-1");
 
 
     }
@@ -161,26 +161,61 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.featured) {
-            showSMS("6");
+            showSMS("-1");
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "-1");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "featured");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "category");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
             // Handle the camera action
         } else if (id == R.id.inspiration) {
             showSMS("2");
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "2");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "inspiration");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "category");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
             // Handle the camera action
         } else if (id == R.id.peace) {
             showSMS("1");
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "1");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "peace");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "category");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
 
         } else if (id == R.id.thanks) {
             showSMS("3");
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "3");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "thanks");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "category");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
 
         } else if (id == R.id.love) {
             showSMS("4");
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "4");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "love");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "category");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
 
         } else if (id == R.id.friend) {
 
             showSMS("5");
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "5");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "friend");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "category");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
         } else if (id == R.id.shortListed) {
 
             showShortlistedSMS();
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "6");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "shortListed");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "category");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

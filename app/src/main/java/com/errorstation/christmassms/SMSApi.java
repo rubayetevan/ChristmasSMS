@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 public interface SMSApi {
 
     String baseURL = "http://errorstation.com/smsapp/api/";
-    @GET("getsms.php?")
+    @GET("getchristmassms.php?")
     Call<SMS> getFeaturedSMS(@Query("cat") String categoryID);
 
 

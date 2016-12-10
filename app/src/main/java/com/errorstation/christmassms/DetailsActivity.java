@@ -84,6 +84,11 @@ public class DetailsActivity extends AppCompatActivity {
         TextView detailsTV = (TextView) findViewById(R.id.detailsTV);
 
         detailsTV.setText(details);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, details);
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "sms");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
 
         if (count == 0) {
             view.setBackground(getResources().getDrawable(R.drawable.ic_color_1));
@@ -104,6 +109,12 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tapAnimation(shareFAB);
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, details);
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "sms");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle);
+
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, details);
@@ -127,6 +138,11 @@ public class DetailsActivity extends AppCompatActivity {
                             .make(activity_details, "SMS shortlisted! You can now find this sms in 'SHORTLISTED' category.", Snackbar.LENGTH_LONG);
 
                     snackbar.show();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, details);
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "sms");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, bundle);
                 }
                 else if (shortlisted)
                 {
