@@ -17,6 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.NativeExpressAdView;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -44,6 +48,15 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         activity_details = (CoordinatorLayout) findViewById(R.id.activity_details);
+
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4958954259926855~4931623724");
+        NativeExpressAdView adView = (NativeExpressAdView) findViewById(R.id.adView);
+        AdRequest request = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("EB7E6FA39C4BDD75B5A17F5285A52364")
+                .build();
+        adView.loadAd(request);
 
         Realm.init(this);
         realm = Realm.getDefaultInstance();

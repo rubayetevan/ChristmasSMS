@@ -18,6 +18,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,12 +61,22 @@ public class MainActivity extends AppCompatActivity
         Realm.init(this);
         realm = Realm.getDefaultInstance();
 
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4958954259926855~4931623724");
+        AdView mAdView = (AdView) findViewById(R.id.bannerADV);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("EB7E6FA39C4BDD75B5A17F5285A52364")
+                .build();
+        mAdView.loadAd(adRequest);
+
         showSMS("");
 
 
     }
 
     private void showShortlistedSMS() {
+        smsLV.setVisibility(View.GONE);
         List<Sm> smss = new ArrayList<>();
         smss.clear();
         RealmResults<SMSDB> sms = realm.where(SMSDB.class).findAll();
@@ -85,16 +99,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showSMS(String s) {
+        smsLV.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         SMSApi.Factory.getInstance().getFeaturedSMS(s).enqueue(new Callback<SMS>() {
             @Override
             public void onResponse(Call<SMS> call, Response<SMS> response) {
-                progressBar.setVisibility(View.GONE);
-
                 sms.clear();
                 sms = response.body().getSms();
                 SMSAdapter smsAdapter = new SMSAdapter(MainActivity.this, sms);
                 smsLV.setAdapter(smsAdapter);
+                progressBar.setVisibility(View.GONE);
                 smsLV.setVisibility(View.VISIBLE);
             }
 
