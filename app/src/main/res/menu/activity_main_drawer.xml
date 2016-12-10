@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/featured"
-            android:icon="@drawable/ic_1"
+            android:icon="@drawable/ic_featured"
             android:title="Featured" />
         <item
             android:id="@+id/peace"
@@ -28,7 +28,7 @@
             android:title="Friendship" />
         <item
             android:id="@+id/shortListed"
-            android:icon="@drawable/ic_5"
+            android:icon="@drawable/ic_shortlist"
             android:title="Shortlisted" />
     </group>
 

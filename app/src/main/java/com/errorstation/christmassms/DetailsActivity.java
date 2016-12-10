@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -30,6 +31,8 @@ public class DetailsActivity extends AppCompatActivity {
     Realm realm;
     boolean shortlisted = false;
     CoordinatorLayout activity_details;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         activity_details = (CoordinatorLayout) findViewById(R.id.activity_details);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-4958954259926855~4931623724");

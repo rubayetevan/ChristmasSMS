@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity
 
     ProgressBar progressBar;
     Realm realm;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         smsLV = (ListView) findViewById(R.id.smsLV);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity
                 .build();
         mAdView.loadAd(adRequest);
 
-        showSMS("");
+        showSMS("6");
 
 
     }
@@ -157,23 +161,23 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.featured) {
-            showSMS("");
+            showSMS("6");
             // Handle the camera action
         } else if (id == R.id.inspiration) {
-            showSMS("");
+            showSMS("2");
             // Handle the camera action
         } else if (id == R.id.peace) {
-            showSMS("");
+            showSMS("1");
 
         } else if (id == R.id.thanks) {
-            showSMS("");
+            showSMS("3");
 
         } else if (id == R.id.love) {
-            showSMS("");
+            showSMS("4");
 
         } else if (id == R.id.friend) {
 
-            showSMS("");
+            showSMS("5");
         } else if (id == R.id.shortListed) {
 
             showShortlistedSMS();
