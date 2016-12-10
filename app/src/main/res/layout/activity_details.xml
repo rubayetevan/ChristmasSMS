@@ -25,12 +25,15 @@
         </android.support.v7.widget.Toolbar>
 
         <ScrollView
+
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:paddingBottom="15dp"
+                android:layout_marginBottom="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
@@ -94,11 +97,12 @@
                 </FrameLayout>
 
                 <com.google.android.gms.ads.NativeExpressAdView
+                    android:layout_marginBottom="10dp"
                     android:id="@+id/adView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    ads:adSize="340x260"
+                    ads:adSize="320x255"
                     ads:adUnitId="ca-app-pub-4958954259926855/9361823323"></com.google.android.gms.ads.NativeExpressAdView>
             </LinearLayout>
         </ScrollView>
