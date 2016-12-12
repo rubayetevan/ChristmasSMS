@@ -83,13 +83,12 @@ public class MainActivity extends AppCompatActivity
       navigationView.getMenu().getItem(0).setChecked(true);
       getSupportActionBar().setTitle(Html.fromHtml(
           "<font color=\"#FFFFFF\">" + getResources().getString(R.string.featured) + "</font>"));
-    }
-    else
-    {
+    } else {
       AlertDialog.Builder builder = new AlertDialog.Builder(this);
-      builder.setTitle("Attention");
-      builder.setMessage("Internet is not available. Please enable Internet connection to use this app!");
-      builder.setNegativeButton("Exit App",new DialogInterface.OnClickListener() {
+      builder.setTitle(Html.fromHtml("<font color=\"#FF0000\">" + "Attention!" + "</font>"));
+      builder.setMessage(
+          "Internet is not available. Please enable Internet connection to use this app!");
+      builder.setNegativeButton("Exit App", new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int id) {
           //do things
           finish();
@@ -149,8 +148,7 @@ public class MainActivity extends AppCompatActivity
 
         }
       });
-    }catch (RuntimeExecutionException e)
-    {
+    } catch (RuntimeExecutionException e) {
       FirebaseCrash.report(e);
     }
   }
@@ -160,7 +158,24 @@ public class MainActivity extends AppCompatActivity
     if (drawer.isDrawerOpen(GravityCompat.START)) {
       drawer.closeDrawer(GravityCompat.START);
     } else {
-      super.onBackPressed();
+
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      builder.setTitle(Html.fromHtml("<font color=\"#FF0000\">" + "Warning!" + "</font>"));
+      builder.setMessage("Do you really want to exit from this app!");
+      builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int id) {
+          //do things
+          finish();
+        }
+      });
+      builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int id) {
+          //do things
+
+        }
+      });
+      AlertDialog dialog = builder.create();
+      dialog.show();
     }
   }
 
