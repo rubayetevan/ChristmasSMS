@@ -65,10 +65,13 @@
               android:layout_height="200dp"
               android:elevation="20dp"
               android:gravity="center_vertical"
-              android:padding="15dp"
-              android:text="hello"
+              android:paddingLeft="15dp"
+              android:paddingRight="15dp"
+              android:paddingTop="15dp"
+              android:paddingBottom="28dp"
+              android:text="Short Message Service (SMS) is a text messaging service component of most telephone, World Wide Web, and mobile telephony systems. It uses standardized communic"
               android:textColor="#FFFFFF"
-              android:textSize="18sp"
+              android:textSize="16sp"
               />
 
           <LinearLayout
