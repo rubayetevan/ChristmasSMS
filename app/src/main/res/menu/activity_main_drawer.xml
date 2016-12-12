@@ -4,32 +4,32 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/featured"
-            android:icon="@drawable/ic_featured"
-            android:title="Featured" />
+            android:icon="@drawable/ic_7"
+            android:title="@string/featured" />
         <item
             android:id="@+id/peace"
             android:icon="@drawable/ic_1"
-            android:title="Peace and Happiness" />
+            android:title="@string/peace_and_happiness" />
         <item
             android:id="@+id/inspiration"
             android:icon="@drawable/ic_2"
-            android:title="Inspiration and Blessings" />
+            android:title="@string/inspiration_and_blessings" />
         <item
             android:id="@+id/thanks"
             android:icon="@drawable/ic_3"
-            android:title="Thanks Giving" />
+            android:title="@string/thanks_giving" />
         <item
             android:id="@+id/love"
             android:icon="@drawable/ic_4"
-            android:title="Love and Romance" />
+            android:title="@string/love_and_romance" />
         <item
             android:id="@+id/friend"
             android:icon="@drawable/ic_5"
-            android:title="Friendship" />
+            android:title="@string/friendship" />
         <item
             android:id="@+id/shortListed"
-            android:icon="@drawable/ic_shortlist"
-            android:title="Shortlisted" />
+            android:icon="@drawable/ic_6"
+            android:title="@string/shortlisted" />
     </group>
 
 </menu>

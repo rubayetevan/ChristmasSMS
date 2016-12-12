@@ -6,4 +6,11 @@
 
     <string name="action_settings">Settings</string>
     <string name="transition">v</string>
+    <string name="featured">Featured</string>
+    <string name="peace_and_happiness">Peace and Happiness</string>
+    <string name="inspiration_and_blessings">Inspiration and Blessings</string>
+    <string name="thanks_giving">Thanks Giving</string>
+    <string name="love_and_romance">Love and Romance</string>
+    <string name="friendship">Friendship</string>
+    <string name="shortlisted">Shortlisted</string>
 </resources>

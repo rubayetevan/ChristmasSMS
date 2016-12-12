@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -45,7 +46,7 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(dToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("");
+
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp);
         upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
@@ -71,6 +72,10 @@ public class DetailsActivity extends AppCompatActivity {
         final String title = intent.getStringExtra("title");
         final String id = intent.getStringExtra("id");
 
+       // getSupportActionBar().setTitle(title);
+
+        getSupportActionBar().setTitle(
+            Html.fromHtml("<font color=\"#FFFFFF\">" + title + "</font>"));
 
         SMSDB sms = realm.where(SMSDB.class).equalTo("id", id).findFirst();
 
@@ -91,17 +96,17 @@ public class DetailsActivity extends AppCompatActivity {
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
 
         if (count == 0) {
-            view.setBackground(getResources().getDrawable(R.drawable.ic_color_1));
+            view.setBackground(getResources().getDrawable(R.drawable.ic_color_1_big));
         } else if (count == 1) {
-            view.setBackground(getResources().getDrawable(R.drawable.ic_color_2));
+            view.setBackground(getResources().getDrawable(R.drawable.ic_color_2_big));
         } else if (count == 2) {
-            view.setBackground(getResources().getDrawable(R.drawable.ic_color_3));
+            view.setBackground(getResources().getDrawable(R.drawable.ic_color_3_big));
         } else if (count == 3) {
-            view.setBackground(getResources().getDrawable(R.drawable.ic_color_4));
+            view.setBackground(getResources().getDrawable(R.drawable.ic_color_4_big));
         } else if (count == 4) {
-            view.setBackground(getResources().getDrawable(R.drawable.ic_color_5));
+            view.setBackground(getResources().getDrawable(R.drawable.ic_color_5_big));
         } else if (count == 5) {
-            view.setBackground(getResources().getDrawable(R.drawable.ic_color_6));
+            view.setBackground(getResources().getDrawable(R.drawable.ic_color_6_big));
         }
 
 
