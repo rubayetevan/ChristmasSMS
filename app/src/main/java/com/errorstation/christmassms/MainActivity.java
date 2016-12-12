@@ -1,9 +1,14 @@
 package com.errorstation.christmassms;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,8 +27,10 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import com.google.firebase.crash.FirebaseCrash;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,11 +78,34 @@ public class MainActivity extends AppCompatActivity
         .addTestDevice("EB7E6FA39C4BDD75B5A17F5285A52364")
         .build();
     mAdView.loadAd(adRequest);
+    if (isInternetAvailable(this)) {
+      showSMS("-1");
+      navigationView.getMenu().getItem(0).setChecked(true);
+      getSupportActionBar().setTitle(Html.fromHtml(
+          "<font color=\"#FFFFFF\">" + getResources().getString(R.string.featured) + "</font>"));
+    }
+    else
+    {
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      builder.setTitle("Attention");
+      builder.setMessage("Internet is not available. Please enable Internet connection to use this app!");
+      builder.setNegativeButton("Exit App",new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int id) {
+          //do things
+          finish();
+        }
+      });
+      AlertDialog dialog = builder.create();
+      dialog.setCancelable(false);
+      dialog.show();
+    }
+  }
 
-    showSMS("-1");
-    navigationView.getMenu().getItem(0).setChecked(true);
-    getSupportActionBar().setTitle(Html.fromHtml(
-        "<font color=\"#FFFFFF\">" + getResources().getString(R.string.featured) + "</font>"));
+  public static boolean isInternetAvailable(Context context) {
+    ConnectivityManager connectivityManager =
+        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+    return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
   }
 
   private void showShortlistedSMS() {
@@ -102,22 +132,27 @@ public class MainActivity extends AppCompatActivity
   }
 
   private void showSMS(String s) {
-    smsLV.setVisibility(View.GONE);
-    progressBar.setVisibility(View.VISIBLE);
-    SMSApi.Factory.getInstance().getFeaturedSMS(s).enqueue(new Callback<SMS>() {
-      @Override public void onResponse(Call<SMS> call, Response<SMS> response) {
-        sms.clear();
-        sms = response.body().getSms();
-        SMSAdapter smsAdapter = new SMSAdapter(MainActivity.this, sms);
-        smsLV.setAdapter(smsAdapter);
-        progressBar.setVisibility(View.GONE);
-        smsLV.setVisibility(View.VISIBLE);
-      }
+    try {
+      smsLV.setVisibility(View.GONE);
+      progressBar.setVisibility(View.VISIBLE);
+      SMSApi.Factory.getInstance().getFeaturedSMS(s).enqueue(new Callback<SMS>() {
+        @Override public void onResponse(Call<SMS> call, Response<SMS> response) {
+          sms.clear();
+          sms = response.body().getSms();
+          SMSAdapter smsAdapter = new SMSAdapter(MainActivity.this, sms);
+          smsLV.setAdapter(smsAdapter);
+          progressBar.setVisibility(View.GONE);
+          smsLV.setVisibility(View.VISIBLE);
+        }
 
-      @Override public void onFailure(Call<SMS> call, Throwable t) {
-        Toast.makeText(MainActivity.this, String.valueOf(t), Toast.LENGTH_SHORT).show();
-      }
-    });
+        @Override public void onFailure(Call<SMS> call, Throwable t) {
+
+        }
+      });
+    }catch (RuntimeExecutionException e)
+    {
+      FirebaseCrash.report(e);
+    }
   }
 
   @Override public void onBackPressed() {

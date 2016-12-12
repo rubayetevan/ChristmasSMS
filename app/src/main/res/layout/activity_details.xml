@@ -45,6 +45,7 @@
           >
 
         <FrameLayout
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -63,12 +64,11 @@
               android:layout_width="match_parent"
               android:layout_height="200dp"
               android:elevation="20dp"
-
               android:gravity="center_vertical"
-              android:padding="10dp"
+              android:padding="15dp"
               android:text="hello"
               android:textColor="#FFFFFF"
-              android:textSize="20sp"
+              android:textSize="18sp"
               />
 
           <LinearLayout
@@ -109,6 +109,7 @@
 
         <com.google.android.gms.ads.NativeExpressAdView
             android:id="@+id/adView"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

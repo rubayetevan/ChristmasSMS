@@ -16,6 +16,8 @@ public interface SMSApi {
     @GET("getchristmassms.php?")
     Call<SMS> getFeaturedSMS(@Query("cat") String categoryID);
 
+    @GET("smsview.php?")
+    Call<SMS> reportView(@Query("smsid") String smsID);
 
     class Factory {
         public static SMSApi api;
