@@ -7,8 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.test.espresso.core.deps.guava.base.Splitter;
-import android.support.test.espresso.core.deps.guava.collect.Iterables;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -79,11 +77,11 @@ public class DetailsActivity extends AppCompatActivity {
     final String id = intent.getStringExtra("id");
 
     // getSupportActionBar().setTitle(title);
-    Iterable<String> result = Splitter.fixedLength(25).split(title);
+  /*  Iterable<String> result = Splitter.fixedLength(25).split(title);
     String[] parts = Iterables.toArray(result, String.class);
-      Log.d(TAG, "onCreate: "+parts[0]);
+      Log.d(TAG, "onCreate: "+parts[0]);*/
     getSupportActionBar().setTitle(Html.fromHtml(
-        "<font color=\"#FFFFFF\" style=\"font-family: Roboto Mono\">" + parts[0] + "..." + "</font>"));
+        "<font color=\"#FFFFFF\" style=\"font-family: Roboto Mono\">" + title + "..." + "</font>"));
 
     SMSDB sms = realm.where(SMSDB.class).equalTo("id", id).findFirst();
 

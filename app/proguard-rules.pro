@@ -6,7 +6,10 @@
 #
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
-
+-dontwarn okio.**
+-dontwarn retrofit2.Platform$Java8
+-dontwarn sun.misc.Unsafe
+-dontwarn org.w3c.dom.bootstrap.DOMImplementationRegistry
 # Add any project specific keep options here:
 
 # If your project uses WebView with JS, uncomment the following
