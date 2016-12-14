@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -65,6 +66,11 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
     navigationView.setItemIconTintList(null);
+    View view = navigationView.getHeaderView(0);
+    ImageView navIconIMGV = (ImageView) view.findViewById(R.id.navIconIMGV);
+    ImageView navBackIMGV = (ImageView) view.findViewById(R.id.navBackIMGV);
+
+
     mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
     smsLV = (ListView) findViewById(R.id.smsLV);
