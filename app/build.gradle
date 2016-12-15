@@ -7,9 +7,9 @@ android {
     applicationId "com.errorstation.christmassms"
     minSdkVersion 19
     targetSdkVersion 25
-    versionCode 1912100
+    versionCode 1912101
 
-    versionName "1.0"
+    versionName "1.01"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {

@@ -40,6 +40,7 @@ public class DetailsActivity extends AppCompatActivity {
   Realm realm;
   boolean shortlisted = false;
   CoordinatorLayout activity_details;
+  NativeExpressAdView adView;
   private FirebaseAnalytics mFirebaseAnalytics;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class DetailsActivity extends AppCompatActivity {
     mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
     MobileAds.initialize(getApplicationContext(), "ca-app-pub-4958954259926855~4931623724");
-    NativeExpressAdView adView = (NativeExpressAdView) findViewById(R.id.adView);
+    adView = (NativeExpressAdView) findViewById(R.id.adView);
     AdRequest request = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
         .addTestDevice("EB7E6FA39C4BDD75B5A17F5285A52364")
         .build();
@@ -194,7 +195,30 @@ public class DetailsActivity extends AppCompatActivity {
 
     return super.onOptionsItemSelected(item);
   }
+  public void onPause() {
+    if (adView != null) {
+      adView.pause();
+    }
+    super.onPause();
+  }
 
+  /** Called when returning to the activity */
+  @Override
+  public void onResume() {
+    super.onResume();
+    if (adView != null) {
+      adView.resume();
+    }
+  }
+
+  /** Called before the activity is destroyed */
+  @Override
+  public void onDestroy() {
+    if (adView != null) {
+      adView.destroy();
+    }
+    super.onDestroy();
+  }
   public void tapAnimation(View view) {
 
     final Animation myAnim = AnimationUtils.loadAnimation(DetailsActivity.this, R.anim.bounce);

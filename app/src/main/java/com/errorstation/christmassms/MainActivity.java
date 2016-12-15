@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
   ListView smsLV;
   List<Sm> sms = new ArrayList<>();
-
+  AdView mAdView;
   ProgressBar progressBar;
   Realm realm;
   private FirebaseAnalytics mFirebaseAnalytics;
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
     realm = Realm.getDefaultInstance();
 
     MobileAds.initialize(getApplicationContext(), "ca-app-pub-4958954259926855~4931623724");
-    AdView mAdView = (AdView) findViewById(R.id.bannerADV);
+    mAdView = (AdView) findViewById(R.id.bannerADV);
     AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
         .addTestDevice("EB7E6FA39C4BDD75B5A17F5285A52364")
         .build();
@@ -183,6 +183,30 @@ public class MainActivity extends AppCompatActivity
       AlertDialog dialog = builder.create();
       dialog.show();
     }
+  }
+  public void onPause() {
+    if (mAdView != null) {
+      mAdView.pause();
+    }
+    super.onPause();
+  }
+
+  /** Called when returning to the activity */
+  @Override
+  public void onResume() {
+    super.onResume();
+    if (mAdView != null) {
+      mAdView.resume();
+    }
+  }
+
+  /** Called before the activity is destroyed */
+  @Override
+  public void onDestroy() {
+    if (mAdView != null) {
+      mAdView.destroy();
+    }
+    super.onDestroy();
   }
 
     /*@Override
